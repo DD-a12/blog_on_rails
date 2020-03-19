@@ -1,0 +1,9 @@
+<% @posts.each do |post| %>
+<div class="border border-dark" style="margin: 2em;">
+    <div style="margin: 1em;">
+    <h2><%=link_to( post.title, post_path(post.id)) %></h2>
+    <p><%= post.body %></p>
+    <p>Posted <%= time_ago_in_words(post.created_at) %> ago</p>
+    </div>
+</div>
+<% end%>

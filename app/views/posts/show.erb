@@ -1,0 +1,36 @@
+<h1><%= @post.title %></h1>
+<p><%= @post.body %></p>
+<p>Asked <%= time_ago_in_words(@post.created_at) %> ago</p>
+<p>Last edited <%= time_ago_in_words(@post.updated_at) %></p>
+<% if can? :crud, @post %>
+<%= link_to("Delete", post_path(@post), method: :delete, data:{confirm:'Are you sure?' }) %>
+<br />
+<%= link_to 'Edit', edit_post_path(@post.id)%>
+<% end %>
+
+<%= form_with(model: [@post, @comment], local: true) do |f| %>
+    <% if @comment.errors.present? %>
+        <%= @comment.errors.full_messages.join(", ") %>
+    <% end %>
+    <%= f.text_area(
+        :body,
+        cols: 50,
+        rows: 3,
+    ) %> <br>
+    <%= f.submit %>
+<% end %>
+
+<% @comments.each do |comment| %>
+    <%= comment.body %> <br>
+    <% if can? :crud, comment%>
+        <%= link_to(
+            "Delete",
+            post_comment_path(@post, comment),
+            method: :delete,
+            data: {
+            confirm: "Are you sure?"
+            }
+        ) %>
+    <% end%>
+      <small>  commented <%= time_ago_in_words(comment.created_at) %> ago </small> <br>
+<% end %>

@@ -1,0 +1,25 @@
+<%= form_with(model: @user, local: true ) do |f| %>
+    <div>
+        <% if @user.errors.present?%>
+        <%= @user.errors.full_messages.join(', ')%>
+        <% end %>
+    </div>
+
+    <div>
+        <%= f.label :first_name%><br>
+        <%= f.text_field :first_name %>
+    </div>
+
+    <div>
+        <%= f.label :last_name%><br>
+        <%= f.text_field :last_name %>
+    </div>
+
+    <div>
+        <%= f.label :email%><br>
+        <%= f.email_field :email %>
+    </div>
+        <%= link_to 'Change Password', change_password_path %><br>
+
+    <%= f.submit%>
+<% end %>
